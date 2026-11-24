@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Herramientas PDF</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="band top">
+    <div class="wrap">
+      <h1>Une y convierte tus documentos</h1>
+      <p class="lead">Todo se procesa en tu navegador: los archivos no se suben a ningún servidor. Hasta 25 documentos por operación.</p>
+      <nav class="tabs" role="tablist" aria-label="Herramientas">
+        <button type="button" role="tab" id="tab-merge" data-tool="merge" aria-selected="true">Unir PDF</button>
+        <button type="button" role="tab" id="tab-word2pdf" data-tool="word2pdf" aria-selected="false">Word a PDF</button>
+        <button type="button" role="tab" id="tab-pdf2word" data-tool="pdf2word" aria-selected="false">PDF a Word</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="band tool">
+    <div class="wrap grid">
+
+      <section class="panel" aria-labelledby="tool-title">
+        <h2 id="tool-title">Unir PDF</h2>
+        <p id="tool-desc" class="desc"></p>
+
+        <label class="drop" id="drop">
+          <input type="file" id="picker" multiple>
+          <svg class="drop-art" viewBox="0 0 120 100" aria-hidden="true">
+            <rect x="30" y="12" width="52" height="68" rx="6" class="sheet back"/>
+            <rect x="40" y="20" width="52" height="68" rx="6" class="sheet front"/>
+            <path d="M52 40h28M52 50h28M52 60h18" class="lines"/>
+            <circle cx="92" cy="78" r="16" class="badge"/>
+            <path d="M92 70v16M85 77l7-7 7 7" class="arrow"/>
+          </svg>
+          <strong>Arrastra tus archivos aquí</strong>
+          <span>o haz clic para elegirlos · <b id="accept-label">.pdf</b></span>
+        </label>
+
+        <div class="options" id="opt-merge">
+          <label for="out-name">Nombre del PDF final</label>
+          <div class="name-field">
+            <input type="text" id="out-name" value="documento-unido" autocomplete="off" spellcheck="false">
+            <span>.pdf</span>
+          </div>
+        </div>
+
+        <fieldset class="options" id="opt-pdf2word" hidden>
+          <legend>Modo de conversión</legend>
+          <label class="radio"><input type="radio" name="mode" value="text" checked>
+            <span><b>Texto editable</b> Extrae el texto de cada página para que puedas editarlo en Word.</span></label>
+          <label class="radio"><input type="radio" name="mode" value="image">
+            <span><b>Conservar diseño</b> Cada página se inserta como imagen. Ideal para escaneos o diseños complejos.</span></label>
+        </fieldset>
+      </section>
+
+      <section class="panel list-panel" aria-labelledby="list-title">
+        <div class="list-head">
+          <h2 id="list-title">Archivos <span id="count" class="count">0/25</span></h2>
+          <button type="button" id="clear" class="ghost" disabled>Vaciar lista</button>
+        </div>
+        <p id="hint" class="hint">Arrastra las filas o usa las flechas para cambiar el orden.</p>
+        <ol id="list" class="files"></ol>
+        <p id="empty" class="empty">Aún no agregaste archivos.</p>
+
+        <div class="progress" id="progress" hidden>
+          <div class="bar"><i id="bar"></i></div>
+          <span id="status"></span>
+        </div>
+
+        <button type="button" id="run" class="primary" disabled>Unir PDF</button>
+      </section>
+
+    </div>
+  </main>
+
+  <section class="band results" id="results-band" hidden aria-labelledby="results-title">
+    <div class="wrap">
+      <div class="list-head">
+        <h2 id="results-title">Listo para descargar</h2>
+        <button type="button" id="zip" class="ghost" hidden>Descargar todo (.zip)</button>
+      </div>
+      <ul id="results" class="results-list"></ul>
+    </div>
+  </section>
+
+  <footer class="band foot">
+    <div class="wrap">
+      <p>Word a PDF acepta archivos <b>.docx</b>; el formato antiguo .doc debe guardarse antes como .docx desde Word. Los PDF protegidos con contraseña no se pueden procesar.</p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="render-area" aria-hidden="true"></div>
+
+  <!-- Librerías -->
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@9.8.1/dist/index.iife.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
